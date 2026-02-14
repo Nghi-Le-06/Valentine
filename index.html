@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Valentine của Sen ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background:radial-gradient(circle at center,#ffd6e6 0%,#ff9fbd 100%);
+  color:white;
+  text-align:center;
+}
+
+/* TEXT */
+.text{
+  position:absolute;
+  bottom:8%;
+  width:100%;
+  padding:0 20px;
+  font-size:24px;
+  line-height:2.1;
+  opacity:0;
+  transform:translateY(30px);
+  filter:blur(5px);
+  transition:all 1.5s ease;
+}
+.text.show{
+  opacity:1;
+  transform:translateY(0);
+  filter:blur(0);
+}
+
+/* BUTTON */
+button{
+  position:absolute;
+  bottom:3%;
+  left:50%;
+  transform:translateX(-50%);
+  padding:15px 35px;
+  border:none;
+  border-radius:30px;
+  background:white;
+  color:#ff4d6d;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* STAR */
+.star{
+  position:absolute;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  transition:all 3s cubic-bezier(.25,.8,.25,1);
+}
+
+/* HEART BEAT */
+#heartContainer{
+  position:absolute;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+.heartbeat{
+  animation:beat 1.5s infinite;
+}
+@keyframes beat{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
+
+/* MINI HEART */
+.mini-heart{
+  position:absolute;
+  color:#ff1e4d;
+  font-size:18px;
+  animation:floatUp 5s ease-out forwards;
+}
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-200px);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="heartContainer"></div>
+<div class="text" id="text"></div>
+<button id="startBtn">Bắt đầu Valentine ❤️</button>
+
+<audio id="piano" src="piano1.mp3" loop></audio>
+
+<script>
+var piano=document.getElementById("piano");
+var heartContainer=document.getElementById("heartContainer");
+var text=document.getElementById("text");
+var startBtn=document.getElementById("startBtn");
+
+var stars=[];
+var totalStars=1200;
+
+/* TẠO SAO RẢI */
+function createStars(){
+  for(let i=0;i<totalStars;i++){
+    let s=document.createElement("div");
+    s.className="star";
+    s.style.background=`hsl(${Math.random()*360},100%,70%)`;
+    s.style.left=Math.random()*window.innerWidth+"px";
+    s.style.top=Math.random()*window.innerHeight+"px";
+    document.body.appendChild(s);
+    stars.push(s);
+  }
+}
+
+/* TỤ THÀNH TRÁI TIM */
+function formHeart(){
+  for(let i=0;i<stars.length;i++){
+    let t=Math.PI*2*(i/stars.length);
+    let x=16*Math.pow(Math.sin(t),3);
+    let y=-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
+
+    stars[i].style.left=(window.innerWidth/2 + x*15)+"px";
+    stars[i].style.top=(window.innerHeight/2 + y*15)+"px";
+  }
+
+  setTimeout(()=>{
+    heartContainer.classList.add("heartbeat");
+  },3000);
+}
+
+/* MINI HEART */
+function spawnMiniHeart(){
+  let h=document.createElement("div");
+  h.className="mini-heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.top="75vh";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+}
+
+/* LỜI CHÚC GIỮ NGUYÊN */
+var content=[
+"Moa à…",
+"Hôm nay là Valentine.",
+"Có lẽ ngoài kia người ta đang nói về hoa hồng, về quà, về những điều rực rỡ và ồn ào.",
+"Nhưng sen ngồi đây, chỉ nghĩ về moa.",
+
+"Sen nghĩ về việc trong suốt quãng thời gian vừa qua,",
+"điều làm sen thấy mình sống rõ ràng nhất…",
+"không phải là những điều lớn lao,",
+"mà là sự hiện diện của moa.",
+
+"Chỉ là moa thôi.",
+
+"Có những ngày bình thường đến mức chẳng có gì đặc biệt.",
+"Nhưng chỉ cần moa nhắn một tin,",
+"hoặc chỉ cần sen nhớ đến moa thôi,",
+"ngày đó tự nhiên trở nên ấm hơn.",
+
+"Moa biết không…",
+"Có những đêm sen nằm rất lâu,",
+"nhìn trần nhà,",
+"không bật đèn,",
+"không mở nhạc,",
+"chỉ để nghe tiếng tim mình đập.",
+
+"Và trong từng nhịp ấy,",
+"sen nghe thấy tên moa.",
+
+"Sen nghĩ về cách moa cười.",
+"Nghĩ về ánh mắt moa nhìn sen, đôi khi dịu, đôi khi nghịch, đôi khi sâu đến mức sen không dám nhìn lâu.",
+"Nghĩ về những lúc moa dỗi, những lúc moa im lặng,",
+"nhưng vẫn ở lại.",
+
+"Sen chưa từng nói với moa điều này một cách đầy đủ…",
+"Rằng mỗi lần moa chọn không rời đi,",
+"đối với sen, đó là một điều rất lớn.",
+
+"Vì trong thế giới này,",
+"ở lại không bao giờ là điều dễ dàng.",
+
+"Cảm ơn moa vì đã ở lại với sen.",
+"Cảm ơn moa vì đã kiên nhẫn với một người có nhiều lo lắng như sen.",
+"Cảm ơn moa vì đã thương sen theo cách không ồn ào nhưng rất sâu.",
+
+"Valentine này…",
+"Sen không muốn nói những lời hoa mỹ.",
+"Sen chỉ muốn nói thật.",
+
+"Rằng sen yêu moa.",
+"Yêu theo cách rất yên.",
+"Không phải yêu để khoe,",
+"không phải yêu để chứng minh điều gì với ai,",
+"mà là yêu vì trái tim sen chọn như thế.",
+
+"Có thể sen không hoàn hảo.",
+"Có thể sen vẫn còn những ngày yếu đuối, những ngày chông chênh.",
+"Nhưng trong tất cả những điều chưa hoàn hảo đó,",
+"tình yêu sen dành cho moa chưa từng là điều nửa vời.",
+
+"Nó đầy đủ.",
+"Nó thật.",
+"Và nó ở đây.",
+
+"Moa à…",
+"Nếu có lúc nào đó moa cảm thấy sợ hãi,",
+"sợ mất sen,",
+"sợ một ngày nào đó mọi thứ thay đổi…",
+
+"thì hãy tin sen một điều thôi.",
+
+"Rằng trong từng khoảnh khắc còn có thể,",
+"sen đang cố gắng yêu moa bằng tất cả những gì mình có.",
+
+"Sen không dám hứa về tương lai dài bao lâu.",
+"Sen không dám nói trước điều gì về ngày mai.",
+
+"Nhưng ngay lúc này,",
+"ngay trong ngày Valentine này,",
+"sen muốn moa biết rằng:",
+
+"Moa là điều khiến sen thấy mình may mắn.",
+
+"Không phải vì moa hoàn hảo.",
+"Mà vì moa là moa.",
+
+"Là người đã làm tim sen mềm lại.",
+"Là người khiến sen biết thế nào là thương một ai đó đến mức chỉ cần người ấy bình an thôi cũng đủ.",
+
+"Nếu có thể,",
+"sen ước mình có thể ôm moa thật chặt vào lúc này.",
+
+"Ôm thật lâu.",
+"Không nói gì cả.",
+
+"Chỉ để moa nghe tim sen.",
+"Chỉ để moa biết rằng mọi lời sen nói hôm nay không phải là bốc đồng của một ngày Valentine,",
+"mà là điều sen giữ trong lòng từ rất lâu rồi.",
+
+"Valentine này…",
+"Sen không cần quà.",
+"Không cần điều gì rực rỡ.",
+
+"Sen chỉ cần moa ở đây.",
+"Ở cạnh sen.",
+"Ở trong vòng tay sen.",
+"Ở trong những ngày rất bình thường của sen.",
+
+"Chỉ vậy thôi.",
+
+"Và nếu sen có thể nói nhỏ thêm một điều nữa…",
+"Cảm ơn vì đã yêu sen.",
+"Cảm ơn vì đã không buông tay.",
+
+"Sen yêu moa.",
+"Yêu nhiều hơn những gì sen có thể nói ra.",
+"Yêu nhiều đến mức đôi khi chính sen cũng thấy tim mình run lên một chút.",
+"Cảm ơn moa vì đã đến bên sen",
+"Và cảm ơn, valentine của sen thật ý nghĩa"
+];
+
+
+/* HIỂN THỊ */
+function playText(){
+  let i=0;
+  function next(){
+    if(i>=content.length) return;
+    text.textContent=content[i];
+    text.classList.add("show");
+    spawnMiniHeart();
+    i++;
+    setTimeout(()=>{
+      text.classList.remove("show");
+      setTimeout(next,600);
+    },2600);
+  }
+  next();
+}
+
+startBtn.onclick=function(){
+  piano.volume=0.5;
+  piano.play();
+  this.style.display="none";
+  formHeart();
+  playText();
+};
+
+createStars();
+</script>
+
+</body>
+</html>
